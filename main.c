@@ -5,15 +5,27 @@ typedef struct {
     double min;
     double max;
     double avg;
+    int a;
+    int b;
+    int c;
+    int d;
+    int f;
 } Stats;
 
 Stats get_stats_from_array(double array[], int size) {
-    Stats s = {.min = 100, .max = 0, .avg = 0.0};
+    Stats s = {.min = 100, .max = 0, .avg = 0.0, .a = 0, .b = 0, .c = 0, .d = 0, .f = 0};
 
     for (int i = 0; i < size; ++i) {
-        if (array[i] < s.min) s.min = array[i];
-        if (array[i] > s.max) s.max = array[i];
-        s.avg += array[i];
+        double v = array[i];
+        if (v < s.min) s.min = v;
+        if (v > s.max) s.max = v;
+        s.avg += v;
+
+        if (v >= 90.00 && v <= 100.00) s.a++;
+        else if (v >= 80.00 && v < 90.00) s.b++;
+        else if (v >= 70.00 && v < 80.00) s.c++;
+        else if (v >= 60.00 && v < 70.00) s.d++;
+        else s.f++;
     }
     s.avg /= size;
     return s;
@@ -73,6 +85,14 @@ int main() {
     else if (s.avg >= 70.00 && s.avg < 80.00) printf("C");
     else if (s.avg >= 60.00 && s.avg < 70.00) printf("D");
     else printf("F");
+    printf("\n");
+    printf("Count per letter:\n");
+    printf("A: %d\n", s.a);
+    printf("B: %d\n", s.b);
+    printf("C: %d\n", s.c);
+    printf("D: %d\n", s.d);
+    printf("F: %d\n", s.f);
+    printf("--------------------------------------------------");
 
     return 0;
 }
